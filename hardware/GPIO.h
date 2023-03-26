@@ -46,5 +46,8 @@ typedef struct GPIO_init_struct
 void GPIO_init(GPIO_TypeDef *GPIOx,GPIO_init_struct *init_struct);
 void GPIO_setBits(GPIO_TypeDef *GPIOx,uint16_t GPIO_PIN);
 void GPIO_resetBits(GPIO_TypeDef *GPIOx,uint16_t GPIO_PIN);
-
+uint8_t GPIO_readOUTDataBit(GPIO_TypeDef *GPIOx,uint16_t GPIO_PIN);
+uint16_t GPIO_readOUTData(GPIO_TypeDef *GPIOx);
+uint8_t GPIO_readINDataBit(GPIO_TypeDef *GPIOx,uint16_t GPIO_PIN);
+uint16_t GPIO_readINData(GPIO_TypeDef *GPIOx);
 #endif
