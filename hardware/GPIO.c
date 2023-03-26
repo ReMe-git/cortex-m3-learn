@@ -58,6 +58,7 @@ void GPIO_resetBits(GPIO_TypeDef *GPIOx,uint16_t GPIO_PIN)
 	GPIOx->BRR|= GPIO_PIN;
 }
 
+//读取对应Pin的输出值
 uint8_t GPIO_readOUTDataBit(GPIO_TypeDef *GPIOx,uint16_t GPIO_PIN)
 {
 	if(GPIOx->ODR& GPIO_PIN== GPIO_PIN)
@@ -70,6 +71,7 @@ uint8_t GPIO_readOUTDataBit(GPIO_TypeDef *GPIOx,uint16_t GPIO_PIN)
 	}
 }
 
+//读取对应GPIO的输出值
 uint8_t GPIO_readINDataBit(GPIO_TypeDef *GPIOx,uint16_t GPIO_PIN)
 {
 	if(GPIOx->IDR& GPIO_PIN== GPIO_PIN)
@@ -82,12 +84,20 @@ uint8_t GPIO_readINDataBit(GPIO_TypeDef *GPIOx,uint16_t GPIO_PIN)
 	}
 }
 
+//读取对应Pin的输入值
 uint16_t GPIO_readOUTData(GPIO_TypeDef *GPIOx)
 {
   return (uint16_t)(GPIOx->ODR);
 }
 
+//读取对应GPIO的输入值
 uint16_t GPIO_readINData(GPIO_TypeDef *GPIOx)
 {
   return (uint16_t)(GPIOx->IDR);
+}
+
+//向对应GPIO写入val值
+void GPIO_write(GPIO_TypeDef *GPIOx,uint16_t val)
+{
+  GPIOx->ODR= val;
 }
