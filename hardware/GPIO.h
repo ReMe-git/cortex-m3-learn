@@ -50,5 +50,5 @@ uint8_t GPIO_readOUTDataBit(GPIO_TypeDef *GPIOx,uint16_t GPIO_PIN);
 uint16_t GPIO_readOUTData(GPIO_TypeDef *GPIOx);
 uint8_t GPIO_readINDataBit(GPIO_TypeDef *GPIOx,uint16_t GPIO_PIN);
 uint16_t GPIO_readINData(GPIO_TypeDef *GPIOx);
-uint16_t GPIO_write(GPIO_TypeDef *GPIOx,uint16_t val);
+void GPIO_write(GPIO_TypeDef *GPIOx,uint16_t val);
 #endif
