@@ -1,4 +1,5 @@
 #include "core_m3.h"
+#include "errDef.h"
 
 #ifndef _HARDWARE_H
 #define _HARDWARE_H
