@@ -87,7 +87,7 @@ void rcc_CLOCKS_freq(clock_freq_st *clocks)
       clocks->SYSCLK_FREQ= 72000000;
       break;
     Deafult:
-      clocks->SYSCLK_FREQ= 0;
+      clocks->SYSCLK_FREQ= 8000000;
       break;
   }
 #define AHB_PRES_NONE ((uint32_t)0x00000000)
