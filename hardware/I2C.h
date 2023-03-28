@@ -13,5 +13,5 @@ typedef struct I2C_init_st
   uint16_t I2C_ACK_ADDRESS;
 } I2C_init_st;
 
-void I2C_init(I2C_TypeDef *I2Cx,I2C_init_st *init_st);
+err_t I2C_init(I2C_TypeDef *I2Cx,I2C_init_st *init_st);
 #endif
