@@ -1,4 +1,4 @@
-#include "cortex_m3.h"
+#include "core_m3.h"
 
 #ifndef _ERRDEF_H
 #define _ERRDEF_H
