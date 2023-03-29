@@ -58,7 +58,7 @@ err_t I2C_init(I2C_TypeDef *I2Cx,I2C_init_st *init_st)
   else
   {
 		//根据占空比配置时钟寄存器		
-		if(init_st->I2C_FAST_DUTY= 0xc000)
+		if(init_st->I2C_FAST_DUTY= 0x8000)
 		{
 			result= (uint16_t)(clock_freq/ (uint16_t)(init_st->I2C_CLK_SPEED* 3));
 		}
