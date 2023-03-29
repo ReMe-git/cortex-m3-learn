@@ -35,7 +35,7 @@
 /*总线时钟频率结构体*/
 typedef struct clock_freq_st
 {
-	uint32_t SYSCLOCK_FREQ;
+	uint32_t SYSCLK_FREQ;
 	uint32_t AHB_FREQ;
 	uint32_t APB1_FREQ;
 	uint32_t APB2_FREQ;
