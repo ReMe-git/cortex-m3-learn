@@ -45,7 +45,7 @@ err_t I2C_init(I2C_TypeDef *I2Cx,I2C_init_st *init_st)
 		//设置SCL时钟
 		if((result= (uint16_t)(clock_freq/ (init_st->I2C_CLK_SPEED<< 1)))< 0x04)
 		{
-			tmp_val|= 0x04;
+			return I2C_ERR_CCR_TOOLOW;
 		}
 		else
 		{
@@ -68,7 +68,7 @@ err_t I2C_init(I2C_TypeDef *I2Cx,I2C_init_st *init_st)
 		}
 		if(result& I2C_CCR_FS_RESET== 0)
 		{
-			return I2C_ERR_FS_TOOLOW; 
+			return I2C_ERR_CCR_TOOLOW; 
 		}
 		result|= init_st->I2C_FAST_DUTY;
 		//配置最大上升时间
