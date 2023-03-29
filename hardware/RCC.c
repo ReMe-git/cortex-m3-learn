@@ -57,7 +57,7 @@ uint32_t rcc_SYSCLK_src(void)
 //查看各总线频率
 void rcc_CLOCKS_freq(clock_freq_st *clocks)
 {
-	switch((uint32_t)(RCC->CFGR& ((uint32_t)0x00ff000f)))
+	switch((uint32_t)(RCC->CFGR& ((uint32_t)0x00ff000c)))
   {
     case SYSCLK_HSI_8MHz:
       clocks->SYSCLK_FREQ= 8000000;
@@ -90,16 +90,7 @@ void rcc_CLOCKS_freq(clock_freq_st *clocks)
       clocks->SYSCLK_FREQ= 8000000;
       break;
   }
-#define AHB_PRES_NONE ((uint32_t)0x00000000)
-#define AHB_PRES_2 ((uint32_t)0x00000080)
-#define AHB_PRES_4 ((uint32_t)0x00000090)
-#define AHB_PRES_8 ((uint32_t)0x000000a0)
-#define AHB_PRES_16 ((uint32_t)0x000000b0)
-#define AHB_PRES_64 ((uint32_t)0x000000c0)
-#define AHB_PRES_128 ((uint32_t)0x000000d0)
-#define AHB_PRES_256 ((uint32_t)0x000000e0)
-#define AHB_PRES_512 ((uint32_t)0x000000f0)
-/*AHB*/
+
   switch((uint32_t)(RCC->CFGR& ((uint32_t)0x000000f0)))
   {
 		case AHB_PRES_NONE:
