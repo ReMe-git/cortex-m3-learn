@@ -19,7 +19,7 @@ typedef struct I2C_init_st
 
 err_t I2C_init(I2C_TypeDef *I2Cx,I2C_init_st *init_st)
 {
-  //时钟时钟分频
+  //时钟分频
   uint16_t tmp_val;
 	uint16_t result;
 	uint16_t i2c_freq;
@@ -43,7 +43,7 @@ err_t I2C_init(I2C_TypeDef *I2Cx,I2C_init_st *init_st)
   if(init_st->I2C_CLK_SPEED<= 100000)
   {
 		//设置SCL时钟
-		if((result= (uint16_t)(clock_freq/ (init_st->I2C_CLK_SPEED<< 1)))< 0x04)
+		if((result= (uint16_t)(clock_freq/ (uint16_t)(init_st->I2C_CLK_SPEED* 2)))< 0x04)
 		{
 			return I2C_ERR_CCR_TOOLOW;
 		}
@@ -75,7 +75,7 @@ err_t I2C_init(I2C_TypeDef *I2Cx,I2C_init_st *init_st)
     I2Cx->TRISE = (uint16_t)((i2c_freq* 300/ 1000)+ 1);  
 		tmp_val|= result;
 	}
-	//配置时钟寄存器CRR
+	//配置时钟寄存器CCR
 	I2Cx->CCR|= tmp_val;
 	//使能I2C
 	I2Cx->CR1|= I2C_CR1_PE_SET;
@@ -90,3 +90,16 @@ err_t I2C_init(I2C_TypeDef *I2Cx,I2C_init_st *init_st)
 
 	return ERR_NONE;
 }
+
+void I2C_cmd(I2C_TypeDef *I2Cx,uint8_t state)
+{
+	if(state!= disable)
+	{
+		I2Cx->CR1|= I2C_PE_SET;
+	}
+	else
+	{
+		I2Cx->CR1&= I2C_PE_RESET;
+	}
+}
+
