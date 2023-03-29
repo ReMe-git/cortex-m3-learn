@@ -7,6 +7,6 @@
 
 #define ERR_NONE 0
 //I2C_ERR
-#define I2C_ERR_FS_TOOLOW -1
+#define I2C_ERR_CCR_TOOLOW -1
 
 #endif
