@@ -23,5 +23,5 @@ typedef struct I2C_init_st
 } I2C_init_st;
 
 err_t I2C_init(I2C_TypeDef *I2Cx,I2C_init_st *init_st);
-void I2C_enable(I2C_TypeDef *I2Cx,uint8_t state);
+void I2C_cmd(I2C_TypeDef *I2Cx,uint8_t state);
 #endif
