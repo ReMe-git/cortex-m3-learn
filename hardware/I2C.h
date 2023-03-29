@@ -24,4 +24,10 @@ typedef struct I2C_init_st
 
 err_t I2C_init(I2C_TypeDef *I2Cx,I2C_init_st *init_st);
 void I2C_cmd(I2C_TypeDef *I2Cx,uint8_t state);
+void I2C_start(I2C_TypeDef *I2Cx,uint8_t state);
+void I2C_stop(I2C_TypeDef *I2Cx,uint8_t state);
+void I2C_ack(I2C_TypeDef *I2Cx,uint8_t state);
+void I2C_sendData(I2C_TypeDef *I2Cx,uint8_t data);
+void I2C_sendAddress(I2C_TypeDef *I2Cx,uint8_t address);
+uint8_t I2C_receiveData(I2C_TypeDef *I2Cx);
 #endif
