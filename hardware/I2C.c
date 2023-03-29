@@ -7,6 +7,9 @@
 #define I2C_CR1_START_SET ((uint16_t)0x0100) 
 #define I2C_CR1_START_RESET ((uint16_t)0xfeff) 
 
+#define I2C_CR1_STOP_SET ((uint16_t)0x0200)
+#define I2C_CR1_STOP_RESET ((uint16_t)0xfdff)
+
 #define I2C_CR2_FREQ_RESET ((uint16_t)0xffc0)
 
 #define I2C_CCR_FS_RESET ((uint16_t)0x0fff)
@@ -121,10 +124,15 @@ void I2C_start(I2C_TypeDef *I2Cx,uint8_t state)
 	}
 }
 
-void I2C_stop(I2C_TypeDef *I2Cx,uint8_t state);
-void I2C_ack(I2C_TypeDef *I2Cx,uint8_t state);
-void I2C_call(I2C_TypeDef *I2Cx,uint8_t state);
-void I2C_sendData(I2C_TypeDef *I2Cx,uint8_t data);
-void I2C_sendAddress(I2C_TypeDef *I2Cx,uint8_t address);
-uint8_t I2C_receiveData(I2C_TypeDef *I2Cx);
+void I2C_stop(I2C_TypeDef *I2Cx,uint8_t state)
+{
+	if(state!= disable)
+	{
+		I2Cx->CR1|= I2C_CR1_STOP_SET;
+	}
+	else
+	{
+		I2Cx->CR1&= I2C_CR1_STOP_RESET;
+	}
+}
 
