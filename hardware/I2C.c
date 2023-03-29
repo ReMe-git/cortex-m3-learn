@@ -1,6 +1,12 @@
 #include "HardwareDef.h"
 #include "RCC.h"
 
+#dfine IS_
+#define IS_RECEIVE_ACK(I2Cx) do{ \
+													if(!(I2Cx->SR1& (uint16_t)0x0400)) \
+														return ERR_I2C_ACK_FAILD; \
+														}while(0)\
+
 #define I2C_CR1_PE_SET ((uint16_t)0x0001)
 #define I2C_CR1_PE_RESET ((uint16_t)0xfffe)
 
@@ -107,11 +113,11 @@ void I2C_cmd(I2C_TypeDef *I2Cx,uint8_t state)
 {
 	if(state!= disable)
 	{
-		I2Cx->CR1|= I2C_PE_SET;
+		I2Cx->CR1|= I2C_CR1_PE_SET;
 	}
 	else
 	{
-		I2Cx->CR1&= I2C_PE_RESET;
+		I2Cx->CR1&= I2C_CR1_PE_RESET;
 	}
 }
 
@@ -139,7 +145,7 @@ void I2C_stop(I2C_TypeDef *I2Cx,uint8_t state)
 	}
 }
 
-void I2C_ack(I2C_TypeDef *I2Cx,uint8_t state);
+void I2C_ack(I2C_TypeDef *I2Cx,uint8_t state)
 {
 	if(state!= disable)
 	{
@@ -151,7 +157,6 @@ void I2C_ack(I2C_TypeDef *I2Cx,uint8_t state);
 	}
 }
 
-void I2C_call(I2C_TypeDef *I2Cx,uint8_t state);
 void I2C_sendData(I2C_TypeDef *I2Cx,uint8_t data);
 void I2C_sendAddress(I2C_TypeDef *I2Cx,uint8_t address);
 uint8_t I2C_receiveData(I2C_TypeDef *I2Cx);
