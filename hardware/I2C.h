@@ -20,7 +20,7 @@ typedef struct I2C_init_st
   uint32_t I2C_CLK_SPEED;
   uint16_t I2C_MODE;
   uint16_t I2C_FAST_DUTY;
-  uint16_t I2C_OWN_ADDRSS1;
+  uint16_t I2C_OWN_ADDRESS1;
   uint16_t I2C_ACK;
   uint16_t I2C_ACK_ADDRESS;
 } I2C_init_st;
