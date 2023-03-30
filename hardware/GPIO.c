@@ -1,16 +1,16 @@
 #include "HardwareDef.h"
 /*GPIO初始化结构体*/
-typedef struct GPIO_init_struct
+typedef struct GPIO_init_st
 {
 	uint16_t GPIO_PIN;
 	uint32_t GPIO_MODE;
 	uint32_t SPEED_MODE;
-} GPIO_init_struct;
+} GPIO_init_st;
 
-void GPIO_init(GPIO_TypeDef *GPIOx,GPIO_init_struct *init_struct)
+void GPIO_init(GPIO_TypeDef *GPIOx,GPIO_init_st *init_st)
 {
-	uint32_t mode_conf= init_struct->GPIO_MODE|init_struct->SPEED_MODE;
-	uint16_t pin_conf= init_struct->GPIO_PIN;
+	uint32_t mode_conf= init_st->GPIO_MODE| init_st->SPEED_MODE;
+	uint16_t pin_conf= init_st->GPIO_PIN;
 	uint8_t pin_count= 0x00;
 //配置低位寄存器CRL
 	if((pin_conf|0xff00)!= 0xff00)
@@ -28,8 +28,8 @@ void GPIO_init(GPIO_TypeDef *GPIOx,GPIO_init_struct *init_struct)
 	}
 //配置高位寄存器CRH
 	pin_count= 0x00;
-	mode_conf= init_struct->GPIO_MODE|init_struct->SPEED_MODE;
-	pin_conf= (init_struct->GPIO_PIN>> 8);
+	mode_conf= init_st->GPIO_MODE|init_st->SPEED_MODE;
+	pin_conf= (init_st->GPIO_PIN>> 8);
 
 	if((pin_conf|0xff00)!= 0xff00)
 	{

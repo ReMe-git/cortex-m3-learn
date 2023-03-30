@@ -36,14 +36,14 @@
 #define GPIO_PIN_14 ((uint16_t)0x4000)
 #define GPIO_PIN_15 ((uint16_t)0x8000)
 
-typedef struct GPIO_init_struct
+typedef struct GPIO_init_st
 {
 	uint16_t GPIO_PIN;
 	uint32_t GPIO_MODE;
 	uint32_t SPEED_MODE;
-} GPIO_init_struct;
+} GPIO_init_st;
 
-void GPIO_init(GPIO_TypeDef *GPIOx,GPIO_init_struct *init_struct);
+void GPIO_init(GPIO_TypeDef *GPIOx,GPIO_init_st *init_st);
 void GPIO_setBits(GPIO_TypeDef *GPIOx,uint16_t GPIO_PIN);
 void GPIO_resetBits(GPIO_TypeDef *GPIOx,uint16_t GPIO_PIN);
 uint8_t GPIO_readOUTDataBit(GPIO_TypeDef *GPIOx,uint16_t GPIO_PIN);
