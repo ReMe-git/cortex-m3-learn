@@ -33,6 +33,6 @@ void I2C_ack(I2C_TypeDef *I2Cx,uint8_t state);
 void I2C_sendByte(I2C_TypeDef *I2Cx,uint8_t data);
 void I2C_sendAddress(I2C_TypeDef *I2Cx,uint8_t address,uint8_t direction);
 uint8_t I2C_readByte(I2C_TypeDef *I2Cx);
-void I2C_sendData(I2C_typedef *I2Cx,uint8_t *data,uint8_t len);
-void I2C_readData(I2C_typedef *I2Cx,uint8_t *data, uint8_t len);
+void I2C_sendData(I2C_Typedef *I2Cx,uint8_t *data,uint8_t len);
+void I2C_readData(I2C_Typedef *I2Cx,uint8_t *data, uint8_t len);
 #endif
