@@ -182,3 +182,27 @@ uint8_t I2C_readByte(I2C_TypeDef *I2Cx)
 	return I2Cx->DR;
 }
 
+void I2C_sendData(I2C_typedef *I2Cx,uint8_t *data,uint8_t len)
+{
+  int i;
+
+  for(i= 0;i< len;i++)
+  {
+    while(I2Cx->SR1& I2C_IS_TXE);
+
+    I2Cx->DR= data[i];
+  }
+
+}
+void I2C_readData(I2C_typedef *I2Cx,uint8_t *data, uint8_t len)
+{
+  int i;
+
+  for(i= 0;i< len;i++)
+  {
+    while(I2Cx->SR1& I2C_IS_RXNE);
+
+    data[i]= I2Cx->DR;
+  }
+
+}
