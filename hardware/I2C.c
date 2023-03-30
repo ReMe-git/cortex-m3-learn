@@ -35,9 +35,9 @@ typedef struct I2C_init_st
 err_t I2C_init(I2C_TypeDef *I2Cx,I2C_init_st *init_st)
 {
   //时钟分频
-  uint16_t tmp_val;
-	uint16_t result;
-	uint16_t i2c_freq;
+  uint16_t tmp_val=0x0;
+	uint16_t result= 0x0;
+	uint16_t i2c_freq=0x0;
 	uint32_t clock_freq= 8000000;
   clock_freq_st clock_st;
 
@@ -57,8 +57,17 @@ err_t I2C_init(I2C_TypeDef *I2Cx,I2C_init_st *init_st)
 	//标准模式配置
   if(init_st->I2C_CLK_SPEED<= 100000)
   {
+    result= (uint16_t)(clock_freq/ (uint32_t)(init_st->I2C_CLK_SPEED* 2));
 		//设置SCL时钟
-		if((result= (uint16_t)(clock_freq/ (uint16_t)(init_st->I2C_CLK_SPEED* 2)))< 0x04)
+    /*
+    /--\__|/--\__|/--\__/--\
+          |      |
+          |      |
+          一个时钟周期
+    包括上升和高电平，下降和低电平，标准模式下这两段时间相同为周期的一半及1/ (init_st->I2C_SPEED* 2)
+    1/ (init_st->I2C_SPEED* 2)= CRR* (1/ clock_freq)=> CRR= clock_freq/ (init_st->I2C_SPEED* 2)
+    */
+		if(result< 0x04)
 		{
 			return I2C_ERR_CCR_TOOLOW;
 		}
@@ -73,13 +82,13 @@ err_t I2C_init(I2C_TypeDef *I2Cx,I2C_init_st *init_st)
   else
   {
 		//根据占空比配置时钟寄存器		
-		if(init_st->I2C_FAST_DUTY= 0x8000)
+		if(init_st->I2C_FAST_DUTY== 0x8000)
 		{
-			result= (uint16_t)(clock_freq/ (uint16_t)(init_st->I2C_CLK_SPEED* 3));
+			result= (uint16_t)(clock_freq/ (uint32_t)(init_st->I2C_CLK_SPEED* 3));
 		}
 		else
 		{
-			result= (uint16_t)(clock_freq/ (uint16_t)(init_st->I2C_CLK_SPEED* 25));
+			result= (uint16_t)(clock_freq/ (uint32_t)(init_st->I2C_CLK_SPEED* 25));
 		}
 		if(result& I2C_CCR_FS_RESET== 0)
 		{
