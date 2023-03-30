@@ -182,7 +182,7 @@ uint8_t I2C_readByte(I2C_TypeDef *I2Cx)
 	return I2Cx->DR;
 }
 
-void I2C_sendData(I2C_Typedef *I2Cx,uint8_t *data,uint8_t len)
+void I2C_sendData(I2C_TypeDef *I2Cx,uint8_t *data,uint8_t len)
 {
   int i;
 
@@ -194,7 +194,7 @@ void I2C_sendData(I2C_Typedef *I2Cx,uint8_t *data,uint8_t len)
   }
 
 }
-void I2C_readData(I2C_Typedef *I2Cx,uint8_t *data, uint8_t len)
+void I2C_readData(I2C_TypeDef *I2Cx,uint8_t *data, uint8_t len)
 {
   int i;
 
