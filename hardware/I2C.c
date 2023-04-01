@@ -19,9 +19,6 @@
 
 #define I2C_CR1_CLEAR_MASK ((uint16_t)0xfbf5)
 
-#define I2C_IS_TXE ((uint16_t)0x0080)
-#define I2C_IS_RXNE ((uint16_t)0x0040)
-
 typedef struct I2C_init_st
 {
   uint32_t I2C_CLK_SPEED;
@@ -165,16 +162,14 @@ void I2C_ack(I2C_TypeDef *I2Cx,uint8_t state)
 
 void I2C_sendByte(I2C_TypeDef *I2Cx,uint8_t byte)
 {
-	while(I2Cx->SR1& I2C_IS_TXE);
-
 	I2Cx->DR= byte;
+
 }
 
 void I2C_sendAddress(I2C_TypeDef *I2Cx,uint8_t address,uint8_t direction)
 {
-	while(I2Cx->SR1& I2C_IS_TXE);
-
 	I2Cx->DR= (uint8_t)(address| direction);
+
 }
 
 uint8_t I2C_readByte(I2C_TypeDef *I2Cx)
@@ -188,8 +183,6 @@ void I2C_sendData(I2C_TypeDef *I2Cx,uint8_t *data,uint8_t len)
 
   for(i= 0;i< len;i++)
   {
-    while(I2Cx->SR1& I2C_IS_TXE);
-
     I2Cx->DR= data[i];
   }
 
@@ -200,8 +193,6 @@ void I2C_readData(I2C_TypeDef *I2Cx,uint8_t *data, uint8_t len)
 
   for(i= 0;i< len;i++)
   {
-    while(I2Cx->SR1& I2C_IS_RXNE);
-
     data[i]= I2Cx->DR;
   }
 
