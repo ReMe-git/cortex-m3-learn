@@ -197,3 +197,22 @@ void I2C_readData(I2C_TypeDef *I2Cx,uint8_t *data, uint8_t len)
   }
 
 }
+
+void I2C_checkEvent(I2C_typeDef *I2Cx,uint32_t event)
+{
+  uint32_t val,flag1,flag2;
+  
+  flag1= I2Cx->SR1;
+  flag2= (I2Cx->SR2<< 16);
+
+  val= flag1| flag2;
+
+  if(val== event)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
