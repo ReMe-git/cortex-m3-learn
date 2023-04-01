@@ -9,6 +9,9 @@
 #define uint8_t unsigned char
 #define bool_t uint8_t
 
+
+#define false 0
+#define true !false
 #define disable 0
 #define enable !disable
 
