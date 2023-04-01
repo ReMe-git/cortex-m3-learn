@@ -198,7 +198,7 @@ void I2C_readData(I2C_TypeDef *I2Cx,uint8_t *data, uint8_t len)
 
 }
 
-void I2C_checkEvent(I2C_typeDef *I2Cx,uint32_t event)
+uint8_t I2C_checkEvent(I2C_typeDef *I2Cx,uint32_t event)
 {
   uint32_t val,flag1,flag2;
   
