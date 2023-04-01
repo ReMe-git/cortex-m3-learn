@@ -207,7 +207,7 @@ void I2C_checkEvent(I2C_typeDef *I2Cx,uint32_t event)
 
   val= flag1| flag2;
 
-  if(val== event)
+  if((val& event)== event)
   {
     return true;
   }
