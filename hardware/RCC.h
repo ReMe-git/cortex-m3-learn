@@ -42,8 +42,8 @@ typedef struct clock_freq_st
 	uint32_t ADC_FREQ;
 } clock_freq_st;
 
-uint32_t rcc_SYSCLK_src(void);
-void rcc_CLOCKS_freq(clock_freq_st *clocks);
-void rcc_APB1CLK_conf(uint32_t clock,bool_t state);
-void rcc_APB2CLK_conf(uint32_t clock,bool_t state);
+uint32_t RCC_sysclkSrc(void);
+void RCC_clocksFreq(clock_freq_st *clocks);
+void RCC_apb1Conf(uint32_t clock,bool_t state);
+void RCC_apb2Conf(uint32_t clock,bool_t state);
 #endif

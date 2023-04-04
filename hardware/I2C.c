@@ -42,7 +42,7 @@ err_t I2C_init(I2C_TypeDef *I2Cx,I2C_init_st *init_st)
   tmp_val&= I2C_CR2_FREQ_RESET;
 
 	//获取APB1总线时钟频率
-  rcc_CLOCKS_freq(&clock_st);
+  RCC_clocksFreq(&clock_st);
 	clock_freq=clock_st.APB1_FREQ;
 	//设置I2C分频2~36MHz
 	i2c_freq= (uint32_t)(clock_freq/ 1000000);
@@ -175,27 +175,6 @@ void I2C_sendAddress(I2C_TypeDef *I2Cx,uint8_t address,uint8_t direction)
 uint8_t I2C_readByte(I2C_TypeDef *I2Cx)
 {
 	return I2Cx->DR;
-}
-
-void I2C_sendData(I2C_TypeDef *I2Cx,uint8_t *data,uint8_t len)
-{
-  int i;
-
-  for(i= 0;i< len;i++)
-  {
-    I2Cx->DR= data[i];
-  }
-
-}
-void I2C_readData(I2C_TypeDef *I2Cx,uint8_t *data, uint8_t len)
-{
-  int i;
-
-  for(i= 0;i< len;i++)
-  {
-    data[i]= I2Cx->DR;
-  }
-
 }
 
 uint8_t I2C_checkEvent(I2C_TypeDef *I2Cx,uint32_t event)

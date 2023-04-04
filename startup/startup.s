@@ -1,7 +1,7 @@
 .syntax unified
 .cpu cortex-m3
-.fpu softvfp
 .thumb
+
 .global _start
 .global _Stack_Top
 .global vectors_table

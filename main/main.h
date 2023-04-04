@@ -5,4 +5,6 @@
 #include "delay.h"
 #include "RCC.h"
 #include "GPIO.h"
+#include "I2C.h"
+#include "OLED.h"
 #endif

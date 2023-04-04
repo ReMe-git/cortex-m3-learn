@@ -49,13 +49,13 @@ typedef struct clock_freq_st
 } clock_freq_st;
 
 //查看系统时钟源
-uint32_t rcc_SYSCLK_src(void)
+uint32_t RCC_sysclkSrc(void)
 {
 	return (uint32_t)(RCC->CFGR& ((uint32_t)0x0000000c));
 }
 
 //查看各总线频率
-void rcc_CLOCKS_freq(clock_freq_st *clocks)
+void RCC_clocksFreq(clock_freq_st *clocks)
 {
 	switch((uint32_t)(RCC->CFGR& ((uint32_t)0x00ff000c)))
   {
@@ -178,7 +178,7 @@ void rcc_CLOCKS_freq(clock_freq_st *clocks)
 }
 
 //APB1总线时钟配置
-void rcc_APB1CLK_conf(uint32_t clock,bool_t state)
+void RCC_apb1Conf(uint32_t clock,bool_t state)
 {
   if(state== disable)
   {
@@ -190,7 +190,7 @@ void rcc_APB1CLK_conf(uint32_t clock,bool_t state)
   }
 }
 //APB2总线时钟配置
-void rcc_APB2CLK_conf(uint32_t clock,bool_t state)
+void RCC_apb2Conf(uint32_t clock,bool_t state)
 {
   if(state== disable)
   {
