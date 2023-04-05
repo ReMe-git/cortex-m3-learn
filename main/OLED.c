@@ -4,6 +4,15 @@
 #include "I2C.h"
 #include "GPIO.h"
 
+#define MAX_LINE_DOTS_NUMBER 128
+
+typedef struct line_st{
+	uint8_t bg_dot[2];
+	uint8_t ed_dot[2];
+	uint32_t dots_number;
+	uint8_t dots_set[MAX_LINE_DOTS_NUMBER* 2];
+} line_st;
+
 static uint8_t oled_mem[128][8];
 
 void OLED_writeCmds(uint8_t *cmd,uint8_t len)
@@ -158,33 +167,72 @@ void OLED_setDots(uint8_t *dots,uint32_t num)
   }
 }
 
-void OLED_setLine(uint8_t *dot1,uint8_t *dot2)
+void OLED_rmDots(uint8_t *dots,uint32_t num)
 {
-	uint8_t dots[2*128];
+  uint32_t i;
+  uint8_t dotType[8]={0xfe,0xfd,0xfc,0xfb,0xef,0xdf,0xcf,0xbf};
+
+  I2C_start(I2C1,enable);
+	while(!I2C_checkEvent(I2C1,I2C_EVENT_MASTER_MODE_SELECT));
+
+	I2C_sendAddress(I2C1,(uint8_t)0x78,I2C_ADDRESS_SEND);
+	while(!I2C_checkEvent(I2C1,I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED));
+
+  for(i= 0;i< num;i++)
+  {
+    I2C_sendByte(I2C1,(uint8_t)0x80);
+	  while(!I2C_checkEvent(I2C1,I2C_EVENT_MASTER_BYTE_TRANSMITTED));
+	
+    I2C_sendByte(I2C1,(uint8_t)(0xb0+ dots[i* 2+ 1]/ 8));	
+    while(!I2C_checkEvent(I2C1,I2C_EVENT_MASTER_BYTE_TRANSMITTED));
+    
+    I2C_sendByte(I2C1,(uint8_t)0x80);
+	  while(!I2C_checkEvent(I2C1,I2C_EVENT_MASTER_BYTE_TRANSMITTED));
+	
+    I2C_sendByte(I2C1,(uint8_t)(0x0f& dots[i* 2+ 0]));	
+    while(!I2C_checkEvent(I2C1,I2C_EVENT_MASTER_BYTE_TRANSMITTED));
+
+    I2C_sendByte(I2C1,(uint8_t)0x80);
+	  while(!I2C_checkEvent(I2C1,I2C_EVENT_MASTER_BYTE_TRANSMITTED));
+	
+    I2C_sendByte(I2C1,(uint8_t)(0x10| (dots[i* 2+ 0]>> 4)));
+    while(!I2C_checkEvent(I2C1,I2C_EVENT_MASTER_BYTE_TRANSMITTED));
+
+    I2C_sendByte(I2C1,(uint8_t)0xc0);
+	  while(!I2C_checkEvent(I2C1,I2C_EVENT_MASTER_BYTE_TRANSMITTED));
+		
+		oled_mem[dots[i* 2+ 0]][dots[i* 2+ 1]/ 8]&= dotType[dots[i* 2+ 1]% 8];
+    I2C_sendByte(I2C1,oled_mem[dots[i* 2+ 0]][dots[i* 2+ 1]/ 8]);	
+    while(!I2C_checkEvent(I2C1,I2C_EVENT_MASTER_BYTE_TRANSMITTED));
+  }
+}
+
+void OLED_setLine(line_st *line)
+{
 	int x,y,dx,dy,count,ax,ay;
 
-	x= dot1[0];
-	y= dot1[1];
+	x= line->bg_dot[0];
+	y= line->bg_dot[1];
 
-	if(dot2[0]>= dot1[0])
+	if(line->ed_dot[0]>= line->bg_dot[0])
 	{
-		dx= dot2[0]- dot1[0];
+		dx= line->ed_dot[0]- line->bg_dot[0];
 		ax= 1;
 	}
 	else
 	{
-		dx= dot1[0]- dot2[0];
+		dx= line->bg_dot[0]- line->ed_dot[0];
 		ax= -1;
 	}
 	
-	if(dot2[1]>= dot1[1])
+	if(line->ed_dot[1]>= line->bg_dot[1])
 	{
-		dy= dot2[1]- dot1[1];
+		dy= line->ed_dot[1]- line->bg_dot[1];
 		ay= 1;
 	}
 	else
 	{
-		dy= dot1[1]- dot2[1];
+		dy= line->bg_dot[1]- line->ed_dot[1];
 		ay= -1;
 	}
 
@@ -193,15 +241,16 @@ void OLED_setLine(uint8_t *dot1,uint8_t *dot2)
 /*浮点*/
 		float d= 0.0f;
 		float k= (float)dy/ dx;
+
 		for(count= 0;count< dx;count++)
 		{
-			dots[count* 2+ 0]= (uint8_t)x;
-			dots[count* 2+ 1]= (uint8_t)y;
+			line->dots_set[count* 2+ 0]= (uint8_t)x;
+			line->dots_set[count* 2+ 1]= (uint8_t)y;
 			x+= ax;
 
 			d= d+ k;
 
-			if(d>= 0.5f)
+			if(d>= 0.5)
 			{
 				y+= ay;
 				d= d- 1.0f;
@@ -234,15 +283,16 @@ void OLED_setLine(uint8_t *dot1,uint8_t *dot2)
 /*浮点*/
 		float d= 0.0f;
 		float k= (float)dx/ dy;
+
 		for(count= 0;count< dy;count++)
 		{
-			dots[count* 2+ 0]= (uint8_t)x;
-			dots[count* 2+ 1]= (uint8_t)y;
+			line->dots_set[count* 2+ 0]= (uint8_t)x;
+			line->dots_set[count* 2+ 1]= (uint8_t)y;
 			y+= ay;
 
 			d= d+ k;
 
-			if(d>= 0.8f)
+			if(d>= 0.5)
 			{
 				x+= ax;
 				d= d- 1.0f;
@@ -269,6 +319,6 @@ void OLED_setLine(uint8_t *dot1,uint8_t *dot2)
 		}
 */
 	}
-
-	OLED_setDots(dots,(uint32_t)(count- 1));
+	line->dots_number= (uint32_t)(count- 1);
+	OLED_setDots(line->dots_set,(uint32_t)(count- 1));
 }
