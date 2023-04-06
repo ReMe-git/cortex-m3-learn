@@ -6,6 +6,7 @@
 
 #define MAX_LINE_DOTS_NUMBER 128
 #define MAX_CIRCLE_DOTS_NUMBER 64
+#define MAX_ELLIPSE_DOTS_NUMBER 64
 
 typedef struct line_st{
 	uint8_t bg_dot[2];
@@ -20,6 +21,14 @@ typedef struct circle_st{
 	uint32_t dots_number;
 	uint8_t dots_set[MAX_CIRCLE_DOTS_NUMBER* 2];
 } circle_st;
+
+typedef struct ellipse_st{
+	uint8_t md_dot[2];
+	uint8_t a;
+	uint8_t b;
+	uint32_t dots_number;
+	uint8_t dots_set[MAX_ELLIPSE_DOTS_NUMBER* 2];
+} ellipse_st;
 
 static uint8_t oled_mem[128][8];
 
@@ -337,7 +346,7 @@ void OLED_setLine(line_st *line)
 
 			d= d+ k;
 
-			if(d>= 0.5)
+			if(d>= 0.5f)
 			{
 				y+= ay;
 				d= d- 1.0f;
@@ -379,7 +388,7 @@ void OLED_setLine(line_st *line)
 
 			d= d+ k;
 
-			if(d>= 0.5)
+			if(d>= 0.5f)
 			{
 				x+= ax;
 				d= d- 1.0f;
@@ -496,3 +505,104 @@ void OLED_setCircle(circle_st *circle)
 
   OLED_circleSetDots(circle);
 }
+
+void OLED_ellipseSetDots(ellipse_st *ellipse)
+{
+  uint8_t mx,my,dx,dy,i;
+  
+  mx= ellipse->md_dot[0];
+  my= ellipse->md_dot[1];
+
+  OLED_close();
+
+  for(i= 0;i< ellipse->dots_number;i++)
+  {
+    dx= ellipse->dots_set[i* 2+ 0];
+    dy= ellipse->dots_set[i* 2+ 1];
+    OLED_setDot(mx+ dx,my+ dy);
+    OLED_setDot(mx+ dx,my- dy);
+    OLED_setDot(mx- dx,my- dy);
+    OLED_setDot(mx- dx,my+ dy);
+  }
+
+  OLED_open();
+
+}
+
+void OLED_rmEllipse(ellipse_st *ellipse)
+{
+  uint8_t mx,my,dx,dy,i;
+  
+  mx= ellipse->md_dot[0];
+  my= ellipse->md_dot[1];
+
+  OLED_close();
+
+  for(i= 0;i< ellipse->dots_number;i++)
+  {
+    dx= ellipse->dots_set[i* 2+ 0];
+    dy= ellipse->dots_set[i* 2+ 1];
+    OLED_rmDot(mx+ dx,my+ dy);
+    OLED_rmDot(mx+ dx,my- dy);
+    OLED_rmDot(mx- dx,my- dy);
+    OLED_rmDot(mx- dx,my+ dy);
+  }
+
+  OLED_open();
+
+}
+
+void OLED_setEllipse(ellipse_st *ellipse)
+{
+	int x,y,a,b,count;
+	float d1,d2;
+	x= 0;
+	y= ellipse->b;
+	a= ellipse->a;
+	b= ellipse->b;
+
+	d1= (float)(b* b+ a* a* (-b+ 0.25f));
+
+	ellipse->dots_set[0]= x;
+	ellipse->dots_set[1]= y;
+
+	for(count= 1;(float)(b* b* (x+ 1.0f))< (float)(a* a* (y- 0.5f));count++)
+	{
+		if(d1<= 0.0f)
+		{
+			d1+= (float)(b* b* (2* x+ 3));
+			x+= 1;
+		}
+		else
+		{
+			d1+= (float)(b* b* (2* x+ 3)+ a* a* (-2* y+ 2));
+			x+= 1;
+			y-= 1;
+		}
+
+		ellipse->dots_set[count* 2+ 0]= x;
+		ellipse->dots_set[count* 2+ 1]= y;
+	}
+	d2= (float)(b* b* (x+ 0.5f)* (x+ 0.5f)+ a* a* (y- 1.0f)* (y- 1.0f)- a* a* b* b);
+	for(;y> 0;count++)
+	{
+		if(d2<= 0.0f)
+		{
+			d2+= (float)(b* b* (2* x+ 2)+ a* a* (-2* y+ 3));
+			x+= 1;
+			y-= 1;
+		}
+		else
+		{
+			d2+= (float)(a* a* (-2* y+ 3));
+			y-= 1;
+		}
+
+		ellipse->dots_set[count* 2+ 0]= x;
+		ellipse->dots_set[count* 2+ 1]= y;
+	}
+
+	ellipse->dots_number= count;
+	OLED_ellipseSetDots(ellipse);
+}
+
