@@ -1,4 +1,5 @@
 #include "HardwareDef.h"
+#include "heap.h"
 #include "delay.h"
 #include "RCC.h"
 #include "I2C.h"
@@ -42,9 +43,9 @@ typedef struct change_st{
 	float m;
 } change_st;
 
-static uint8_t oled_mem[128][8];
-uint8_t setDotType[8];
-uint8_t rmDotType[8];
+static uint8_t *oled_mem; //8x128
+uint8_t *setDotType; //8
+uint8_t *rmDotType; //8
 
 void OLED_start(void)
 {
@@ -108,20 +109,18 @@ void OLED_clear(void)
 
 void OLED_memClear(void)
 {
-	int i,n;
-	for(i= 0;i< 128;i++)
+	int i;
+	for(i= 0;i< 8* 128;i++)
 	{
-		for(n= 0;n< 8;n++)
-		{
-			oled_mem[i][n]= (uint8_t)0x00;
-		
-		}
-
+		oled_mem[i]= (uint8_t)0x00;
 	}
 }
 
 void OLED_dataInit(void)
 {
+  oled_mem= (uint8_t *)HEAP_malloc(8* 128);
+  setDotType= (uint8_t *)HEAP_malloc(8);
+  rmDotType= (uint8_t *)HEAP_malloc(8);
 	OLED_memClear();
 
 	setDotType[0]= 0x01;
@@ -217,8 +216,8 @@ void OLED_setDot(uint8_t x,uint8_t y)
 	OLED_sendCmd((uint8_t)(0xb0+ y/ 8));
 	OLED_sendCmd((uint8_t)(0x0f& x));
 	OLED_sendCmd((uint8_t)(0x10| (x>> 4)));
-  oled_mem[x][y/ 8]|= setDotType[y% 8];
-	OLED_sendData(oled_mem[x][y/ 8]);
+  oled_mem[y/ 8* 128+ x]|= setDotType[y% 8];
+	OLED_sendData(oled_mem[y/ 8* 128+ x]);
 
 	OLED_stop();
 }
@@ -230,8 +229,8 @@ void OLED_rmDot(uint8_t x,uint8_t y)
 	OLED_sendCmd((uint8_t)(0xb0+ y/ 8));
 	OLED_sendCmd((uint8_t)(0x0f& x));
 	OLED_sendCmd((uint8_t)(0x10| (x>> 4)));
-  oled_mem[x][y/ 8]|= rmDotType[y% 8];
-	OLED_sendData(oled_mem[x][y/ 8]);
+  oled_mem[y/ 8* 128+ x]&= rmDotType[y% 8];
+	OLED_sendData(oled_mem[y/ 8* 128+ x]);
 
 	OLED_stop();
 }
@@ -247,8 +246,8 @@ void OLED_setDots(uint8_t *dots,uint32_t num)
 		OLED_sendCmd((uint8_t)(0xb0+ dots[i* 2+ 1]/ 8));
 		OLED_sendCmd((uint8_t)(0x0f& dots[i* 2+ 0]));
 		OLED_sendCmd((uint8_t)(0x10| (dots[i* 2+ 0]>> 4)));
-		oled_mem[dots[i* 2+ 0]][dots[i* 2+ 1]/ 8]|= setDotType[dots[i* 2+ 1]% 8];
-		OLED_sendData(oled_mem[dots[i* 2+ 0]][dots[i* 2+ 1]/ 8]);
+		oled_mem[dots[i* 2+ 1]/ 8* 128+ dots[i* 2+ 0]]|= setDotType[dots[i* 2+ 1]% 8];
+		OLED_sendData(oled_mem[dots[i* 2+ 1]/ 8* 128+ dots[i* 2+ 0]]);
 	}
 
 	OLED_stop();
@@ -266,8 +265,8 @@ void OLED_rmDots(uint8_t *dots,uint32_t num)
 		OLED_sendCmd((uint8_t)(0xb0+ dots[i* 2+ 1]/ 8));
 		OLED_sendCmd((uint8_t)(0x0f& dots[i* 2+ 0]));
 		OLED_sendCmd((uint8_t)(0x10| (dots[i* 2+ 0]>> 4)));
-		oled_mem[dots[i* 2+ 0]][dots[i* 2+ 1]/ 8]|= rmDotType[dots[i* 2+ 1]% 8];
-		OLED_sendData(oled_mem[dots[i* 2+ 0]][dots[i* 2+ 1]/ 8]);
+		oled_mem[dots[i* 2+ 1]/ 8* 128+ dots[i* 2+ 0]]&= rmDotType[dots[i* 2+ 1]% 8];
+		OLED_sendData(oled_mem[dots[i* 2+ 1]/ 8* 128+ dots[i* 2+ 0]]);
 	}
 
 	OLED_stop();
