@@ -14,6 +14,7 @@
 #define true !false
 #define disable 0
 #define enable !disable
+#define NULL 0
 
 /*base address*/
 #define PERIPH_BASE ((uint32_t)0x40000000)
