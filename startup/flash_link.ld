@@ -1,6 +1,6 @@
 ENTRY(Reset_Handler)
 
-_Heap_Size = 0x400;
+_Heap_Size = 0x2800;
 _Stack_Size = 0x800;
 
 MEMORY
@@ -62,5 +62,5 @@ SECTIONS
     . = . +_Stack_Size;
     _Stack_Top = .;
     . = ALIGN(4);
-  }
+  } >SRAM
 }
