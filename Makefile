@@ -8,8 +8,9 @@ COPY=arm-none-eabi-objcopy
 COPY_FLAG=-O ihex
 DUMP=arm-none-eabi-objdump
 float= no
+ARM_NONE_EABI_PATH= /home/Re.ME/tools/arm-none-gcc/lib/gcc/arm-none-eabi
 FLOAT_FLAG=-mfloat-abi=softfp
-FLOAT_PATH= /home/Re.ME/tools/arm-none-gcc/lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/libgcc.a
+FLOAT_PATH= $(ARM_NONE_EABI_PATH)/10.3.1//thumb/v7-m/nofp/libgcc.a
 ifeq ($(float),yes)
 GCC_FLAG += $(FLOAT_FLAG)
 endif
