@@ -22,6 +22,7 @@
 #define RCC_CFGR_SWS ((uint32_t)0x00000008)
 
 extern void Exit(void);
+
 void systemclk_set(void);
 
 void system_init(void)

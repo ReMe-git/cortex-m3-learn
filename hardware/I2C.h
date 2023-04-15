@@ -57,5 +57,5 @@ void I2C_ack(I2C_TypeDef *I2Cx,uint8_t state);
 void I2C_sendByte(I2C_TypeDef *I2Cx,uint8_t byte);
 void I2C_sendAddress(I2C_TypeDef *I2Cx,uint8_t address,uint8_t direction);
 uint8_t I2C_readByte(I2C_TypeDef *I2Cx);
-uint8_t I2C_checkEvent(I2C_TypeDef *I2Cx,uint32_t event);
+bool_t I2C_checkEvent(I2C_TypeDef *I2Cx,uint32_t event);
 #endif

@@ -21,8 +21,8 @@ heap_st *heap;
 
 void HEAP_init(void)
 {
-  extern heap_st _Heap_Base;
-	heap= &_Heap_Base;
+  extern heap_st heap_base;
+	heap= &heap_base;
 
 	heap->size= 0;
 	heap->chunk_number= 0;
@@ -86,7 +86,7 @@ void *HEAP_malloc(uint32_t size)
 
 }
 
-//堆栈式释放可达到回收效果
+//堆栈式释放申请的内存可达到更好的回收效果
 void HEAP_free(void *pointer)
 {
 	int i;

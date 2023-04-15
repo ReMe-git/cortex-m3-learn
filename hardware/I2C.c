@@ -177,7 +177,7 @@ uint8_t I2C_readByte(I2C_TypeDef *I2Cx)
 	return I2Cx->DR;
 }
 
-uint8_t I2C_checkEvent(I2C_TypeDef *I2Cx,uint32_t event)
+bool_t I2C_checkEvent(I2C_TypeDef *I2Cx,uint32_t event)
 {
   uint32_t val,flag1,flag2;
   
