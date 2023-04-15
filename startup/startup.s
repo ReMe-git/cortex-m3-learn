@@ -3,13 +3,13 @@
 .thumb
 
 .global _start
-.global _Stack_Top
+.global _Main_Stack_Top
 .global vectors_table
 .type vectors_table,%object
 
 .section .text.vectors_table
 vectors_table:
-	.word _Stack_Top
+	.word _Main_Stack_Top
 	.word	Reset_Handler
   .word	NMI_Handler
 	.word	HardFault_Handler
