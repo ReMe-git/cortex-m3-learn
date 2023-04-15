@@ -33,7 +33,7 @@ else
 	$(LD) $(LD_FLAG) $^ -o $(BUILD_DIR)$(TARGET).elf
 endif
 	$(COPY) $(COPY_FLAG) $(BUILD_DIR)$(TARGET).elf $(BUILD_DIR)$(TARGET).hex
-	$(DUMP) -D $(BUILD_DIR)$(TARGET).elf > $(BUILD_DIR)$(TARGET).list
+	$(DUMP) -D $(BUILD_DIR)$(TARGET).elf > $(BUILD_DIR)$(TARGET).map
 
 $(STARTUP_OBJ):$(STARTUP_SRC)
 ifeq ($(debug),yes)
