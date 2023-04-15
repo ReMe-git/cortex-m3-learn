@@ -61,7 +61,7 @@ void SPI_writeData(SPI_TypeDef *SPIx,uint16_t halfWord);
 uint16_t SPI_readData(SPI_TypeDef *SPIx);
 bool_t SPI_checkSign(SPI_TypeDef *SPIx,uint16_t sign);
 void SPI_enableCRC(SPI_TypeDef *SPIx,uint8_t state);
-void SPI_startCRC(SPI_TypeDef *SPIx,uint8_t state);
+void SPI_checkCRC(SPI_TypeDef *SPIx,uint8_t state);
 void SPI_enableSSOE(SPI_TypeDef *SPIx,uint8_t state);
 
 #endif

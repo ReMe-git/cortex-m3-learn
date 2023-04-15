@@ -102,7 +102,7 @@ void SPI_enableCRC(SPI_TypeDef *SPIx,uint8_t state)
 
 }
 
-void SPI_startCRC(SPI_TypeDef *SPIx,uint8_t state)
+void SPI_checkCRC(SPI_TypeDef *SPIx,uint8_t state)
 {
 	if(state!= disable)
 	{
@@ -116,7 +116,7 @@ void SPI_startCRC(SPI_TypeDef *SPIx,uint8_t state)
 	}
 
 }
-
+/*使用硬件NSS在输出时应使能SSOE*/
 void SPI_enableSSOE(SPI_TypeDef *SPIx,uint8_t state)
 {
 	if(state!= disable)
