@@ -7,8 +7,6 @@
 #define uint16_t unsigned short
 #define int8_t char
 #define uint8_t unsigned char
-#define bool_t uint8_t
-
 
 #define false 0
 #define true !false
