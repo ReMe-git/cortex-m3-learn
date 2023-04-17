@@ -74,3 +74,12 @@ uint8_t DMA_checKSign(DMA_TypeDef *dma,uint32_t sign)
 
 }
 
+void DMA_clearSign(DMA_TypeDef *dma,uint32_t sign)
+{
+  if((dma->ISR& sign)== sign)
+  {
+    dma->ISR&= (~sign);
+
+  }
+
+}
