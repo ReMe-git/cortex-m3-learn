@@ -1,5 +1,4 @@
 #include "core_m3.h"
-#include "errDef.h"
 
 #ifndef _HARDWARE_H
 #define _HARDWARE_H
@@ -168,6 +167,21 @@ typedef struct
   uint16_t  RESERVED9;
 } RTC_TypeDef;
 
+typedef struct
+{
+  uint32_t CCR;
+  uint32_t CNDTR;
+  uint32_t CPAR;
+  uint32_t CMAR;
+} DMA_Channel_TypeDef;
+
+typedef struct
+{
+  uint32_t ISR;
+  uint32_t IFCR;
+} DMA_TypeDef;
+
+
 /*APB1*/
 #define TIM2_BASE             (APB1PERIPH_BASE + 0x0000)
 #define TIM2                ((TIM_TypeDef *) TIM2_BASE)
@@ -243,5 +257,33 @@ typedef struct
 /*AHB*/
 #define RCC_BASE              (AHBPERIPH_BASE + 0x1000)
 #define RCC                 ((RCC_TypeDef *) RCC_BASE)
+#define DMA1_BASE             (AHBPERIPH_BASE + 0x0000)
+#define DMA1                ((DMA_TypeDef *) DMA1_BASE)
+#define DMA1_Channel1_BASE    (AHBPERIPH_BASE + 0x0008)
+#define DMA1_Channel1       ((DMA_Channel_TypeDef *) DMA1_Channel1_BASE)
+#define DMA1_Channel2_BASE    (AHBPERIPH_BASE + 0x001C)
+#define DMA1_Channel2       ((DMA_Channel_TypeDef *) DMA1_Channel2_BASE)
+#define DMA1_Channel3_BASE    (AHBPERIPH_BASE + 0x0030)
+#define DMA1_Channel3       ((DMA_Channel_TypeDef *) DMA1_Channel3_BASE)
+#define DMA1_Channel4_BASE    (AHBPERIPH_BASE + 0x0044)
+#define DMA1_Channel4       ((DMA_Channel_TypeDef *) DMA1_Channel4_BASE)
+#define DMA1_Channel5_BASE    (AHBPERIPH_BASE + 0x0058)
+#define DMA1_Channel5       ((DMA_Channel_TypeDef *) DMA1_Channel5_BASE)
+#define DMA1_Channel6_BASE    (AHBPERIPH_BASE + 0x006C)
+#define DMA1_Channel6       ((DMA_Channel_TypeDef *) DMA1_Channel6_BASE)
+#define DMA1_Channel7_BASE    (AHBPERIPH_BASE + 0x0080)
+#define DMA1_Channel7       ((DMA_Channel_TypeDef *) DMA1_Channel7_BASE)
+#define DMA2_BASE             (AHBPERIPH_BASE + 0x0400)
+#define DMA2                ((DMA_TypeDef *) DMA2_BASE)
+#define DMA2_Channel1_BASE    (AHBPERIPH_BASE + 0x0408)
+#define DMA2_Channel1       ((DMA_Channel_TypeDef *) DMA2_Channel1_BASE)
+#define DMA2_Channel2_BASE    (AHBPERIPH_BASE + 0x041C)
+#define DMA2_Channel2       ((DMA_Channel_TypeDef *) DMA2_Channel2_BASE)
+#define DMA2_Channel3_BASE    (AHBPERIPH_BASE + 0x0430)
+#define DMA2_Channel3       ((DMA_Channel_TypeDef *) DMA2_Channel3_BASE)
+#define DMA2_Channel4_BASE    (AHBPERIPH_BASE + 0x0444)
+#define DMA2_Channel4       ((DMA_Channel_TypeDef *) DMA2_Channel4_BASE)
+#define DMA2_Channel5_BASE    (AHBPERIPH_BASE + 0x0458)
+#define DMA2_Channel5       ((DMA_Channel_TypeDef *) DMA2_Channel5_BASE)
 
 #endif

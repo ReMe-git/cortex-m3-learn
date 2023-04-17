@@ -29,7 +29,7 @@ typedef struct I2C_init_st
   uint16_t I2C_ACK_ADDRESS;
 } I2C_init_st;
 
-err_t I2C_init(I2C_TypeDef *I2Cx,I2C_init_st *init_st)
+void I2C_init(I2C_TypeDef *I2Cx,I2C_init_st *init_st)
 {
   //时钟分频
   uint16_t tmp_val=0x0;
@@ -66,7 +66,8 @@ err_t I2C_init(I2C_TypeDef *I2Cx,I2C_init_st *init_st)
     */
 		if(result< 0x04)
 		{
-			return I2C_ERR_CCR_TOOLOW;
+      result= 0x04;
+      tmp_val|= result;
 		}
 		else
 		{
@@ -87,10 +88,7 @@ err_t I2C_init(I2C_TypeDef *I2Cx,I2C_init_st *init_st)
 		{
 			result= (uint16_t)(clock_freq/ (uint32_t)(init_st->I2C_CLK_SPEED* 25));
 		}
-		if(result& I2C_CCR_FS_RESET== 0)
-		{
-			return I2C_ERR_CCR_TOOLOW; 
-		}
+
 		result|= init_st->I2C_FAST_DUTY;
 		//配置最大上升时间
     I2Cx->TRISE = (uint16_t)((i2c_freq* 300/ 1000)+ 1);  
@@ -109,7 +107,6 @@ err_t I2C_init(I2C_TypeDef *I2Cx,I2C_init_st *init_st)
 	//设置自身地址或者目标地址
 	I2Cx->OAR1|= (uint16_t)(init_st->I2C_OWN_ADDRESS1| init_st->I2C_ACK_ADDRESS);
 
-	return ERR_NONE;
 }
 
 void I2C_cmd(I2C_TypeDef *I2Cx,uint8_t state)
@@ -177,7 +174,7 @@ uint8_t I2C_readByte(I2C_TypeDef *I2Cx)
 	return I2Cx->DR;
 }
 
-bool_t I2C_checkEvent(I2C_TypeDef *I2Cx,uint32_t event)
+uint8_t I2C_checkEvent(I2C_TypeDef *I2Cx,uint32_t event)
 {
   uint32_t val,flag1,flag2;
   

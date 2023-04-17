@@ -43,6 +43,8 @@ void OLED_init(void);
 void OLED_clear(void);
 void OLED_writeCmds(uint8_t *cmd,uint8_t len);
 void OLED_setDots(uint8_t *dots,uint32_t num);
+void OLED_open(void);
+void OLED_close(void);
 void OLED_rmDots(uint8_t *dots,uint32_t num);
 void OLED_setLine(line_st *line);
 void OLED_freshLine(line_st *line);

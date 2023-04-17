@@ -9,9 +9,9 @@
 #define SPI_DIRECTION_2L_RD ((uint16_t)0x0400)
 #define SPI_DIRECTION_1L_RX ((uint16_t)0x8000)
 #define SPI_DIRECTION_1L_TX ((uint16_t)0xc000)
-//SPI_DATAFPS
-#define SPI_DATAFPS_8BITS ((uint16_t)0x0000)
-#define SPI_DATAFPS_16BITS ((uint16_t)0x0800)
+//SPI_DATA_FPS
+#define SPI_DATA_FPS_8BITS ((uint16_t)0x0000)
+#define SPI_DATA_FPS_16BITS ((uint16_t)0x0800)
 //SPI_CPOL
 #define SPI_CPOL_LOW ((uint16_t)0x0000)
 #define SPI_CPOL_HIGH ((uint16_t)0x0002)
@@ -24,15 +24,15 @@
 //SPI_NSS
 #define SPI_NSS_HARD ((uint16_t)0x0000)
 #define SPI_NSS_SOFT ((uint16_t)0x0200)
-//SPI_BAUDPRE
-#define SPI_BAUDPRE_2 ((uint16_t)0x0000)
-#define SPI_BAUDPRE_4 ((uint16_t)0x0008)
-#define SPI_BAUDPRE_8 ((uint16_t)0x0010)
-#define SPI_BAUDPRE_16 ((uint16_t)0x0018)
-#define SPI_BAUDPRE_32 ((uint16_t)0x0020)
-#define SPI_BAUDPRE_64 ((uint16_t)0x0028)
-#define SPI_BAUDPRE_128 ((uint16_t)0x0030)
-#define SPI_BAUDPRE_256 ((uint16_t)0x0038)
+//SPI_BAUD_PRE
+#define SPI_BAUD_PRE_2 ((uint16_t)0x0000)
+#define SPI_BAUD_PRE_4 ((uint16_t)0x0008)
+#define SPI_BAUD_PRE_8 ((uint16_t)0x0010)
+#define SPI_BAUD_PRE_16 ((uint16_t)0x0018)
+#define SPI_BAUD_PRE_32 ((uint16_t)0x0020)
+#define SPI_BAUD_PRE_64 ((uint16_t)0x0028)
+#define SPI_BAUD_PRE_128 ((uint16_t)0x0030)
+#define SPI_BAUD_PRE_256 ((uint16_t)0x0038)
 //SPI_SIGNS
 #define SPI_SIGN_SBY ((uint16_t)0x0080)
 #define SPI_SIGN_OVR ((uint16_t)0x0040)
@@ -45,21 +45,20 @@
 typedef struct SPI_init_st{
   uint16_t SPI_MODE;
 	uint16_t SPI_DIRECTION;
-  uint16_t SPI_DATAFPS;
+  uint16_t SPI_DATA_FPS;
   uint16_t SPI_CPOL;
   uint16_t SPI_CPHA;
   uint16_t SPI_FIRST;
   uint16_t SPI_NSS;
-	uint16_t SPI_BAUDPRE;
+	uint16_t SPI_BAUDRATE_PRE;
 	uint16_t SPI_CRCPLOY;
 } SPI_init_st;
-
 
 void SPI_init(SPI_TypeDef *SPIx,SPI_init_st *init_st);
 void SPI_enable(SPI_TypeDef *SPIx,uint8_t state);
 void SPI_writeData(SPI_TypeDef *SPIx,uint16_t halfWord);
 uint16_t SPI_readData(SPI_TypeDef *SPIx);
-bool_t SPI_checkSign(SPI_TypeDef *SPIx,uint16_t sign);
+uint8_t SPI_checkSign(SPI_TypeDef *SPIx,uint16_t sign);
 void SPI_enableCRC(SPI_TypeDef *SPIx,uint8_t state);
 void SPI_checkCRC(SPI_TypeDef *SPIx,uint8_t state);
 void SPI_enableSSOE(SPI_TypeDef *SPIx,uint8_t state);

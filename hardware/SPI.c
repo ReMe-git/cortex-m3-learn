@@ -14,12 +14,12 @@
 typedef struct SPI_init_st{
   uint16_t SPI_MODE;
 	uint16_t SPI_DIRECTION;
-  uint16_t SPI_DATAFPS;
+  uint16_t SPI_DATA_FPS;
   uint16_t SPI_CPOL;
   uint16_t SPI_CPHA;
   uint16_t SPI_FIRST;
   uint16_t SPI_NSS;
-	uint16_t SPI_BAUDPRE;
+	uint16_t SPI_BAUD_PRE;
 	uint16_t SPI_CRCPLOY;
 } SPI_init_st;
 
@@ -33,12 +33,12 @@ void SPI_init(SPI_TypeDef *SPIx,SPI_init_st *init_st)
 
 	tmp_val|= init_st->SPI_MODE;
 	tmp_val|= init_st->SPI_DIRECTION;
-	tmp_val|= init_st->SPI_DATAFPS;
+	tmp_val|= init_st->SPI_DATA_FPS;
 	tmp_val|= init_st->SPI_CPOL;
 	tmp_val|= init_st->SPI_CPHA;
 	tmp_val|= init_st->SPI_FIRST;
 	tmp_val|= init_st->SPI_NSS;
-	tmp_val|= init_st->SPI_BAUDPRE;
+	tmp_val|= init_st->SPI_BAUD_PRE;
 
 	SPIx->CR1= tmp_val;
 	
@@ -73,7 +73,7 @@ uint16_t SPI_readData(SPI_TypeDef *SPIx)
 
 }
 
-bool_t SPI_checkSign(SPI_TypeDef *SPIx,uint16_t sign)
+uint8_t SPI_checkSign(SPI_TypeDef *SPIx,uint16_t sign)
 {
 	if((SPIx->SR& sign)== sign)
 	{

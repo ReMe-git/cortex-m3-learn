@@ -178,7 +178,7 @@ void RCC_clocksFreq(clock_freq_st *clocks)
 }
 
 //APB1总线时钟配置
-void RCC_apb1Conf(uint32_t clock,bool_t state)
+void RCC_apb1Conf(uint32_t clock,uint8_t state)
 {
   if(state== disable)
   {
@@ -190,7 +190,7 @@ void RCC_apb1Conf(uint32_t clock,bool_t state)
   }
 }
 //APB2总线时钟配置
-void RCC_apb2Conf(uint32_t clock,bool_t state)
+void RCC_apb2Conf(uint32_t clock,uint8_t state)
 {
   if(state== disable)
   {

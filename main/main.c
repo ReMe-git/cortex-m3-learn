@@ -15,7 +15,7 @@ int main(void)
   ellipse.b= 20;
 
   OLED_setEllipse(&ellipse);
-  
+
   OLED_changeInit(&ch1);
   OLED_changeInit(&ch2);
 
@@ -43,7 +43,6 @@ int main(void)
 
   while(1)
 	{
-
   }
 
   return 0;

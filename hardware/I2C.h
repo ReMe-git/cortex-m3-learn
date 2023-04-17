@@ -49,7 +49,7 @@ typedef struct I2C_init_st
   uint16_t I2C_ACK_ADDRESS;
 } I2C_init_st;
 
-err_t I2C_init(I2C_TypeDef *I2Cx,I2C_init_st *init_st);
+void I2C_init(I2C_TypeDef *I2Cx,I2C_init_st *init_st);
 void I2C_cmd(I2C_TypeDef *I2Cx,uint8_t state);
 void I2C_start(I2C_TypeDef *I2Cx,uint8_t state);
 void I2C_stop(I2C_TypeDef *I2Cx,uint8_t state);
@@ -57,5 +57,5 @@ void I2C_ack(I2C_TypeDef *I2Cx,uint8_t state);
 void I2C_sendByte(I2C_TypeDef *I2Cx,uint8_t byte);
 void I2C_sendAddress(I2C_TypeDef *I2Cx,uint8_t address,uint8_t direction);
 uint8_t I2C_readByte(I2C_TypeDef *I2Cx);
-bool_t I2C_checkEvent(I2C_TypeDef *I2Cx,uint32_t event);
+uint8_t I2C_checkEvent(I2C_TypeDef *I2Cx,uint32_t event);
 #endif

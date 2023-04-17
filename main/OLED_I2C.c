@@ -275,20 +275,14 @@ void OLED_rmDots(uint8_t *dots,uint32_t num)
 
 void OLED_freshLine(line_st *line)
 {
-	OLED_close();
-
 	OLED_setDots(line->dots_set,line->dots_number);
 
-	OLED_open();
 }
 
 void OLED_rmLine(line_st *line)
 {
-  OLED_close();
-
 	OLED_rmDots(line->dots_set,line->dots_number);
 
-  OLED_open();
 }
 
 void OLED_setLine(line_st *line)
@@ -371,21 +365,14 @@ void OLED_setLine(line_st *line)
 
 void OLED_freshCircle(circle_st *circle)
 {
-	OLED_close();
-
   OLED_setDots(circle->dots_set,circle->dots_number);
 
-  OLED_open();
 }
 
 void OLED_rmCircle(circle_st *circle)
 {
 
-  OLED_close();
-
   OLED_rmDots(circle->dots_set,circle->dots_number);
-
-  OLED_open();
 
 }
 
@@ -433,20 +420,14 @@ void OLED_setCircle(circle_st *circle)
 
 void OLED_freshEllipse(ellipse_st *ellipse)
 {
-	OLED_close();
-
   OLED_setDots(ellipse->dots_set,ellipse->dots_number);
 
-  OLED_open();
 }
 
 void OLED_rmEllipse(ellipse_st *ellipse)
 {
-	OLED_close();
-
   OLED_rmDots(ellipse->dots_set,ellipse->dots_number);
 
-  OLED_open();
 }
 
 void OLED_setEllipse(ellipse_st *ellipse)

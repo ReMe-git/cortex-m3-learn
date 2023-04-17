@@ -29,6 +29,30 @@
 #define DMA_MEM2MEM_ENABLE ((uint16_t)0x4000)
 #define DMA_MEM2MEM_DISABLE ((uint16_t)0x0000)
 
+#define DMA_SIGN_TEIF ((uint32_t)0x)
+#define DMA_SIGN_TEIF ((uint32_t)0x)
+#define DMA_SIGN_TEIF ((uint32_t)0x)
+#define DMA_SIGN_TEIF ((uint32_t)0x)
+#define DMA_SIGN_TEIF ((uint32_t)0x)
+#define DMA_SIGN_TEIF ((uint32_t)0x)
+#define DMA_SIGN_TEIF ((uint32_t)0x)
+
+#define DMA_SIGN_HTIF ((uint32_t)0x)
+#define DMA_SIGN_HTIF ((uint32_t)0x)
+#define DMA_SIGN_HTIF ((uint32_t)0x)
+#define DMA_SIGN_HTIF ((uint32_t)0x)
+#define DMA_SIGN_HTIF ((uint32_t)0x)
+#define DMA_SIGN_HTIF ((uint32_t)0x)
+#define DMA_SIGN_HTIF ((uint32_t)0x)
+
+#define DMA_SIGN_TCIF ((uint32_t)0x)
+#define DMA_SIGN_TCIF ((uint32_t)0x)
+#define DMA_SIGN_TCIF ((uint32_t)0x)
+#define DMA_SIGN_TCIF ((uint32_t)0x)
+#define DMA_SIGN_TCIF ((uint32_t)0x)
+#define DMA_SIGN_TCIF ((uint32_t)0x)
+#define DMA_SIGN_TCIF ((uint32_t)0x)
+
 /*DMA初始化结构体*/
 typedef struct DMA_channelInit_st{
   uint8_t DMA_CHANNEL;
